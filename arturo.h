@@ -390,22 +390,22 @@ typename Arturo<T>::Nodo* Arturo<T>::get_node(const T &val)
 template<class T>
 ostream &Arturo<T>::mostrarArturo(ostream &os) const
 {
-
     os << "[";
     Nodo* iter = interrupted ? arturo : hablando;
-    for (int i = 0; i < tamanio(); ++i, iter = iter->der) {
-        if (iter == arturo){
-            os << "Arturo(" << iter->value << "),";
-            continue;
+    if (not esVacia()) {
+        for (int i = 0; i < tamanio() && os << ","; ++i, iter = iter->der) {
+            if (iter == arturo) {
+                os << "Arturo(" << iter->value << ")";
+            }
+            else {
+                if (interrupted and iter == hablando) {
+                    os << "*";
+                }
+                os << iter->value;
+            }
         }
-
-        if (interrupted and iter == hablando){
-            os << "*";
-        }
-        os << iter->value << ",";
-
     }
-    os << "]" << endl;
+    os << "]";
 
     return os;
 }
