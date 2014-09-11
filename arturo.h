@@ -197,8 +197,8 @@ Arturo<T>::Arturo()
 template<class T>
 Arturo<T>::~Arturo()
 {
-    while (not esVacia()){
-        if (tamanio() > 1 and caballeroActual() == arturo->value){
+    while (not esVacia()) {
+        if (tamanio() > 1 and caballeroActual() == arturo->value) {
             proximoCaballero();
         }
         expulsarCaballero(caballeroActual());
@@ -214,7 +214,7 @@ Arturo<T>::Arturo(const Arturo<T> &to_copy)
     size = 0;
     interrupted = to_copy.interrupted;
 
-    if (to_copy.esVacia()){
+    if (to_copy.esVacia()) {
         return;
     }
 
@@ -223,7 +223,7 @@ Arturo<T>::Arturo(const Arturo<T> &to_copy)
     for (int i = 0; i < to_copy.tamanio(); ++i, you = you->izq) {
         incorporarCaballero(you->value);
 
-        if(you->value == to_copy.hablando->value){
+        if (you->value == to_copy.hablando->value) {
             hablando = get_node(you->value);
         }
     }
@@ -257,7 +257,7 @@ template<class T>
 void Arturo<T>::expulsarCaballero(const T &c)
 {
     Nodo* to_delete = get_node(c);
-    if (tamanio() > 1 and arturo == to_delete){
+    if (tamanio() > 1 and arturo == to_delete or to_delete == NULL) {
         return;
     }
 
@@ -272,7 +272,7 @@ void Arturo<T>::expulsarCaballero(const T &c)
     delete to_delete;
     size--;
 
-    if (tamanio() == 0){
+    if (tamanio() == 0) {
         hablando = arturo = NULL;
     }
 
@@ -299,19 +299,19 @@ bool Arturo<T>::operator!=(const Arturo<T> &compare) const
 template<class T>
 bool Arturo<T>::operator==(const Arturo<T> &compare) const
 {
-    if(tamanio() != compare.tamanio()){
+    if (tamanio() != compare.tamanio()) {
         return false;
     }
 
-    if(interrupted != compare.interrupted){
+    if (interrupted != compare.interrupted) {
         return false;
     }
 
-    if (arturo != compare.arturo){
+    if (arturo != compare.arturo) {
         return false;
     }
 
-    if(hablando != compare.hablando){
+    if (hablando != compare.hablando) {
         return false;
     }
 
@@ -319,19 +319,19 @@ bool Arturo<T>::operator==(const Arturo<T> &compare) const
     Nodo* you = compare.arturo;
 
     for (int i = 0; i < tamanio(); ++i, me = me->der, you = you->izq) {
-        if (me->value != you->value){
+        if (me->value != you->value) {
             return false;
         }
     }
 
     return true;
-    
+
 }
 
 template<class T>
 const T &Arturo<T>::caballeroActual() const
 {
-    return interrupted? arturo->value : hablando->value;
+    return interrupted ? arturo->value : hablando->value;
 }
 
 template<class T>
@@ -379,10 +379,10 @@ typename Arturo<T>::Nodo* Arturo<T>::get_node(const T &val)
     Nodo* iter;
 
     for (iter = arturo; i < tamanio() && iter->value != val; ++i, iter = iter->der);
-    if (i == tamanio()){
+    if (i == tamanio()) {
         return NULL;
     }
-    else{
+    else {
         return iter;
     }
 }
