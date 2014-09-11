@@ -44,18 +44,8 @@ void check_arturo_de_arturo(){
 
 
 int main() {
-  RUN_TEST(check_crear_mesa_vacia);
+    RUN_TEST(check_crear_mesa_vacia);
     RUN_TEST(check_arturo_de_arturo);
-
-
-    Arturo<string> mesa1;
-    Arturo<string> mesa2;
-
-    Arturo<Arturo<string> > dobleMesa;
-
-    dobleMesa.sentarArturo(mesa1);
-    dobleMesa.incorporarCaballero(mesa2);
-    cout << dobleMesa << endl;
 
   return 0;
 }
