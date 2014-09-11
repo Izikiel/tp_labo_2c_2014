@@ -257,7 +257,10 @@ template<class T>
 void Arturo<T>::expulsarCaballero(const T &c)
 {
     Nodo* to_delete = get_node(c);
-    if (tamanio() > 1 and arturo == to_delete and to_delete == NULL) {
+    if (to_delete == NULL) {
+        return;
+    }
+    if (tamanio() > 1 and arturo == to_delete) {
         return;
     }
 
