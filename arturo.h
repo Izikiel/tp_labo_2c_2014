@@ -162,8 +162,8 @@ class Arturo
          * Aca va la implementación del nodo.
          */
         struct Nodo {
-            Nodo* izq;
-            Nodo* der;
+            Nodo *izq;
+            Nodo *der;
             T value;
             Nodo(const T &val): value(val)
             {
@@ -172,11 +172,11 @@ class Arturo
             };
         };
 
-        Nodo* arturo;
-        Nodo* hablando;
+        Nodo *arturo;
+        Nodo *hablando;
         bool interrupted;
         int size;
-        Nodo* get_node(const T &val);
+        Nodo *get_node(const T &val);
 };
 
 template<class T>
@@ -245,15 +245,15 @@ void Arturo<T>::incorporarCaballero(const T &c)
     Nodo *knight = new Nodo(c);
     knight->der = arturo->der;
     knight->der->izq = knight;
-    arturo->der = knight;
     knight->izq = arturo;
+    arturo->der = knight;
     size++;
 }
 
 template<class T>
 void Arturo<T>::expulsarCaballero(const T &c)
 {
-    Nodo* to_delete = get_node(c);
+    Nodo *to_delete = get_node(c);
     if (to_delete == NULL) {
         return;
     }
@@ -281,12 +281,13 @@ void Arturo<T>::expulsarCaballero(const T &c)
 template<class T>
 void Arturo<T>::cambioDeLugar(const T &c)
 {
-    Nodo* knight = get_node(c);
+    Nodo *knight = get_node(c);
     arturo->der->izq = arturo->izq;
     arturo->izq->der = arturo->der;
 
     arturo->izq = knight;
     arturo->der = knight->der;
+    knight->der->izq = arturo;
     knight->der = arturo;
 }
 
@@ -315,8 +316,8 @@ bool Arturo<T>::operator==(const Arturo<T> &compare) const
         return false;
     }
 
-    Nodo* me = arturo;
-    Nodo* you = compare.arturo;
+    Nodo *me = arturo;
+    Nodo *you = compare.arturo;
 
     for (int i = 0; i < tamanio(); ++i, me = me->der, you = you->izq) {
         if (me->value != you->value) {
@@ -373,16 +374,15 @@ int Arturo<T>::tamanio() const
 }
 
 template<class T>
-typename Arturo<T>::Nodo* Arturo<T>::get_node(const T &val)
+typename Arturo<T>::Nodo *Arturo<T>::get_node(const T &val)
 {
     int i = 0;
-    Nodo* iter;
+    Nodo *iter;
 
     for (iter = arturo; i < tamanio() && iter->value != val; ++i, iter = iter->der);
     if (i == tamanio()) {
         return NULL;
-    }
-    else {
+    } else {
         return iter;
     }
 }
@@ -391,13 +391,12 @@ template<class T>
 ostream &Arturo<T>::mostrarArturo(ostream &os) const
 {
     os << "[";
-    Nodo* iter = interrupted ? arturo : hablando;
+    Nodo *iter = interrupted ? arturo : hablando;
     if (not esVacia()) {
         for (int i = 0; i < tamanio(); ++i, iter = iter->der) {
             if (iter == arturo) {
                 os << "Arturo(" << iter->value << ")";
-            }
-            else {
+            } else {
                 if (interrupted and iter == hablando) {
                     os << "*";
                 }
