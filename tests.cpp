@@ -28,15 +28,21 @@ void check_crear_mesa_vacia() {
  * Crea un Arturo de Arturos.
  */
 void check_arturo_de_arturo(){
-	Arturo<string> mesa1;
+    Arturo<string> mesa1;
     Arturo<string> mesa2;
 
-	Arturo< Arturo<string> > dobleMesa;
-	
-	dobleMesa.sentarArturo(mesa1);
-	dobleMesa.incorporarCaballero(mesa2);
+    Arturo<Arturo<string> > dobleMesa;
 
-    ASSERT(dobleMesa.caballeroActual() == mesa1)
+    dobleMesa.sentarArturo(mesa1);
+
+    mesa2.sentarArturo("ARTURO");
+    cout << mesa2 << endl;
+
+    cout << dobleMesa << endl;
+    dobleMesa.incorporarCaballero(mesa2);
+    cout << dobleMesa << endl;
+
+    ASSERT(dobleMesa.caballeroActual() == mesa1);
 
 
 }

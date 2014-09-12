@@ -219,12 +219,11 @@ Arturo<T>::Arturo(const Arturo<T> &to_copy)
     }
 
     sentarArturo(to_copy.arturo->value);
-    Nodo* you = to_copy.arturo->izq;
-    for (int i = 0; i < to_copy.tamanio(); ++i, you = you->izq) {
-        incorporarCaballero(you->value);
+    for (Nodo *iter = to_copy.arturo->izq; iter->value != arturo->value; iter = iter->izq) {
+        incorporarCaballero(iter->value);
 
-        if (you->value == to_copy.hablando->value) {
-            hablando = get_node(you->value);
+        if (iter->value == to_copy.hablando->value) {
+            hablando = get_node(iter->value);
         }
     }
 
@@ -242,15 +241,13 @@ void Arturo<T>::sentarArturo(const T &a)
 template<class T>
 void Arturo<T>::incorporarCaballero(const T &c)
 {
-    if (get_node(c) == NULL) {
-        Nodo *knight = new Nodo(c);
-        Nodo *old_der = arturo->der;
-        arturo->der = knight;
-        knight->der = old_der;
-        knight->izq = arturo;
-        old_der->izq = knight;
-        size++;
-    }
+    assert (get_node(c) == NULL);
+    Nodo *knight = new Nodo(c);
+    knight->der = arturo->der;
+    knight->der->izq = knight;
+    arturo->der = knight;
+    knight->izq = arturo;
+    size++;
 }
 
 template<class T>
@@ -396,7 +393,7 @@ ostream &Arturo<T>::mostrarArturo(ostream &os) const
     os << "[";
     Nodo* iter = interrupted ? arturo : hablando;
     if (not esVacia()) {
-        for (int i = 0; i < tamanio() && os << ","; ++i, iter = iter->der) {
+        for (int i = 0; i < tamanio(); ++i, iter = iter->der) {
             if (iter == arturo) {
                 os << "Arturo(" << iter->value << ")";
             }
@@ -405,6 +402,9 @@ ostream &Arturo<T>::mostrarArturo(ostream &os) const
                     os << "*";
                 }
                 os << iter->value;
+            }
+            if (i + 1 < tamanio()) {
+                os << ",";
             }
         }
     }
