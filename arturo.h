@@ -219,7 +219,7 @@ Arturo<T>::Arturo(const Arturo<T> &to_copy)
     }
 
     sentarArturo(to_copy.arturo->value);
-    for (Nodo *iter = to_copy.arturo->izq; iter->value != arturo->value; iter = iter->izq) {
+    for (Nodo* iter = to_copy.arturo->izq; iter->value != arturo->value; iter = iter->izq) {
         incorporarCaballero(iter->value);
 
         if (iter->value == to_copy.hablando->value) {
@@ -242,7 +242,7 @@ template<class T>
 void Arturo<T>::incorporarCaballero(const T &c)
 {
     assert (get_node(c) == NULL);
-    Nodo *knight = new Nodo(c);
+    Nodo* knight = new Nodo(c);
     knight->der = arturo->der;
     knight->der->izq = knight;
     arturo->der = knight;
@@ -287,6 +287,7 @@ void Arturo<T>::cambioDeLugar(const T &c)
 
     arturo->izq = knight;
     arturo->der = knight->der;
+    knight->der->izq = knight;
     knight->der = arturo;
 }
 
