@@ -308,18 +308,18 @@ bool Arturo<T>::operator==(const Arturo<T> &compare) const
         return false;
     }
 
-    if (arturo != compare.arturo) {
+    if (arturo->value != compare.arturo->value) {
         return false;
     }
 
-    if (hablando != compare.hablando) {
+    if (hablando->value != compare.hablando->value) {
         return false;
     }
 
     Nodo *me = arturo;
     Nodo *you = compare.arturo;
 
-    for (int i = 0; i < tamanio(); ++i, me = me->der, you = you->izq) {
+    for (int i = 0; i < tamanio(); ++i, me = me->der, you = you->der) {
         if (me->value != you->value) {
             return false;
         }
@@ -358,7 +358,7 @@ void Arturo<T>::hablaArturo()
 template<class T>
 bool Arturo<T>::arturoPresente() const
 {
-    return arturo == NULL;
+    return arturo != NULL;
 }
 
 template<class T>
@@ -395,7 +395,7 @@ ostream &Arturo<T>::mostrarArturo(ostream &os) const
     if (not esVacia()) {
         for (int i = 0; i < tamanio(); ++i, iter = iter->der) {
             if (iter == arturo) {
-                os << "Arturo(" << iter->value << ")";
+                os << "ARTURO(" << iter->value << ")";
             } else {
                 if (interrupted and iter == hablando) {
                     os << "*";
