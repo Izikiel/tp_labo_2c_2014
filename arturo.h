@@ -403,7 +403,7 @@ ostream &Arturo<T>::mostrarArturo(ostream &os) const
                 os << iter->value;
             }
             if (i + 1 < tamanio()) {
-                os << ",";
+                os << ", ";
             }
         }
     }
