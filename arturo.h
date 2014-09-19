@@ -310,14 +310,10 @@ bool Arturo<T>::operator==(const Arturo<T> &compare) const
     }
 
     if (arturo != NULL) {
-        if (arturo->value != compare.arturo->value) {
-            return false;
-        }
         if (hablando->value != compare.hablando->value) {
             return false;
         }
     }
-
 
     Nodo *me = arturo;
     Nodo *you = compare.arturo;
