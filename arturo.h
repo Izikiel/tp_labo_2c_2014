@@ -11,8 +11,7 @@ using namespace std;
  * No se puede asumir que el tipo T tenga operator =
  */
 template<typename T>
-class Arturo
-{
+class Arturo {
 
     public:
 
@@ -152,8 +151,7 @@ class Arturo
         /*
          * No se puede modificar esta funcion.
          */
-        Arturo<T> &operator=(const Arturo<T> &otra)
-        {
+        Arturo<T> &operator=(const Arturo<T> &otra) {
             assert(false);
             return *this;
         }
@@ -165,8 +163,7 @@ class Arturo
             Nodo *izq;
             Nodo *der;
             T value;
-            Nodo(const T &val): value(val)
-            {
+            Nodo(const T &val): value(val) {
                 der = this;
                 izq = this;
             };
@@ -308,13 +305,19 @@ bool Arturo<T>::operator==(const Arturo<T> &compare) const
         return false;
     }
 
-    if (arturo->value != compare.arturo->value) {
+    if ((arturo != NULL) != (compare.arturo != NULL)) {
         return false;
     }
 
-    if (hablando->value != compare.hablando->value) {
-        return false;
+    if (arturo != NULL) {
+        if (arturo->value != compare.arturo->value) {
+            return false;
+        }
+        if (hablando->value != compare.hablando->value) {
+            return false;
+        }
     }
+
 
     Nodo *me = arturo;
     Nodo *you = compare.arturo;
@@ -382,7 +385,8 @@ typename Arturo<T>::Nodo *Arturo<T>::get_node(const T &val)
     for (iter = arturo; i < tamanio() && iter->value != val; ++i, iter = iter->der);
     if (i == tamanio()) {
         return NULL;
-    } else {
+    }
+    else {
         return iter;
     }
 }
@@ -396,7 +400,8 @@ ostream &Arturo<T>::mostrarArturo(ostream &os) const
         for (int i = 0; i < tamanio(); ++i, iter = iter->der) {
             if (iter == arturo) {
                 os << "ARTURO(" << iter->value << ")";
-            } else {
+            }
+            else {
                 if (interrupted and iter == hablando) {
                     os << "*";
                 }
