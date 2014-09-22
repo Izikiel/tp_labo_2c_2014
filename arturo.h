@@ -263,6 +263,7 @@ void Arturo<T>::expulsarCaballero(const T &c)
 
     if (to_delete == hablando) {
         hablando = interrupted ? arturo : hablando->der;
+        interrupted = false;
     }
 
 
